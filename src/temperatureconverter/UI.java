@@ -3,20 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.temperatureconverter;
 
-import java.text.DecimalFormat;
+// TODO: update license headers in all files
+// TODO: update @since attribute in all files
+// TODO: implement conversions involving Kelvin
 
-/**
+package temperatureconverter;
+
+/** This class implements a GUI for a program that converts temperature from
+ * one scale to another.
  *
- * @author Mike Schulenberg
+ * filename: UI.java
+ * @author Mike Schulenberg - mike.schulenberg@gmail.com
+ * @version 2.0
+ * @since 
  */
-public class TemperatureConverterUI extends javax.swing.JFrame {
+public class UI extends javax.swing.JFrame {
+    private final TemperatureConverter CONVERTER;
+    
     /**
      * Creates new form TemperatureConverterUI
      */
-    public TemperatureConverterUI() {
+    public UI() {
         initComponents();
+        CONVERTER = new TemperatureConverter(this);
     }
 
     /**
@@ -36,7 +46,7 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
         temperatureLabel = new javax.swing.JLabel();
         temperatureField = new javax.swing.JTextField();
         scaleLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        OKbutton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         outputLabel = new javax.swing.JLabel();
 
@@ -76,11 +86,10 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
 
         scaleLabel.setText(DEGREE_SYMBOL + " F");
 
-        jButton1.setText("OK");
-        jButton1.setPreferredSize(new java.awt.Dimension(47, 23));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        OKbutton.setText("OK");
+        OKbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                OKbuttonActionPerformed(evt);
             }
         });
 
@@ -100,7 +109,7 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
                             .addComponent(temperatureLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(OKbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scaleLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -120,7 +129,7 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fahrenheitRadioButton)
                 .addGap(27, 27, 27)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(OKbutton)
                 .addGap(20, 20, 20))
         );
 
@@ -169,24 +178,41 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /** Sets the temperature conversion mode to "Fahrenheit to Celsius."
+     * 
+     * @param evt The event triggered by the radio button selection.
+     */
     private void celsiusRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celsiusRadioButtonActionPerformed
         conversionMode = ConversionMode.FAHRENHEIT_TO_CELSIUS;
         scaleLabel.setText(DEGREE_SYMBOL + " F");
     }//GEN-LAST:event_celsiusRadioButtonActionPerformed
 
+    /** Executes the temperature conversion when the text field for entering
+     * temperature data is used.
+     * 
+     * @param evt The event triggered when "Enter" is pressed on the text field.
+     */
     private void temperatureFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureFieldActionPerformed
-        doConversion();
+        convertTemperature();
     }//GEN-LAST:event_temperatureFieldActionPerformed
 
+    /** Sets the temperature conversion mode to "Celsius to Fahrenheit."
+     * 
+     * @param evt The event triggered by the radio button selection.
+     */
     private void fahrenheitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fahrenheitRadioButtonActionPerformed
         conversionMode = ConversionMode.CELSIUS_TO_FAHHRENHEIT;
         scaleLabel.setText(DEGREE_SYMBOL + " C");
     }//GEN-LAST:event_fahrenheitRadioButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         doConversion();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    /** Executes the temperature conversion when the "OK" button is pressed.
+     * 
+     * @param evt The event triggered by the button press.
+     */
+    private void OKbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKbuttonActionPerformed
+         convertTemperature();
+    }//GEN-LAST:event_OKbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,29 +231,30 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TemperatureConverterUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TemperatureConverterUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TemperatureConverterUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TemperatureConverterUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TemperatureConverterUI().setVisible(true);
+                new UI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton OKbutton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton celsiusRadioButton;
     private javax.swing.JRadioButton fahrenheitRadioButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -237,94 +264,40 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
     private javax.swing.JLabel temperatureLabel;
     // End of variables declaration//GEN-END:variables
 
-    // the temperature in degrees before conversion
-    double initialTemperature = 0;      
-    // the temperature in degrees after conversion
-    double convertedTemperature = 0;
-    
-    // tags consisting of degree symbol and temperature scale
+    // the standard degree symbol; used for multiple text elements
     private final String DEGREE_SYMBOL = "\u00B0 ";
     
     // used to switch between temperature conversion modes
     private enum ConversionMode {FAHRENHEIT_TO_CELSIUS, CELSIUS_TO_FAHHRENHEIT};
-    // default conversion mode
+    // set default conversion mode
     private ConversionMode conversionMode 
             = ConversionMode.FAHRENHEIT_TO_CELSIUS;
     
-    private void doConversion(){
+    /** Determines which temperature conversion mode to execute and calls
+     * the appropriate method in the `TemperatureConverter` class.
+     * 
+     */
+    private void convertTemperature()
+    {
         String temperature = temperatureField.getText();           
             
         switch(conversionMode)
         {
             case FAHRENHEIT_TO_CELSIUS :
-                convertToCelsius(temperature);
+                CONVERTER.convertFahrenheitToCelsius(temperature);
                 break;
             case CELSIUS_TO_FAHHRENHEIT :
-                convertToFahrenheit(temperature);
+                CONVERTER.convertCelsuisToFahrenheit(temperature);
                 break;               
         }
     }
     
-    private void convertToCelsius(String temperatureStr){
-        /* Throw an exception if the user enters invalid temperature data.
-        Otherwise, relay the conversion and display commands. */
-        try
-        {
-            double temperature = Double.parseDouble(temperatureStr);
-            initialTemperature = temperature;
-            convertedTemperature = (temperature - 32.0) * (0.5556);
-            printConvertedTemperature("F", "Celsius");
-        }
-        
-        catch(Exception e)
-        {
-            printInputError();
-        }  
-    }
-    
-    private void convertToFahrenheit(String temperatureStr){
-        /* Throw an exception if the user enters invalid temperature data.
-        Otherwise, relay the conversion and display commands. */
-        try
-        {
-            double temperature = Double.parseDouble(temperatureStr);
-            initialTemperature = temperature;
-            convertedTemperature = (temperature * (1.8)) + 32.0;
-            printConvertedTemperature("C", "Fahrenheit");
-        }
-        
-        catch(Exception e)
-        {
-            printInputError();
-        }
-    }
-    
-    /** Prints an error message to the GUI to inform the user of an input
-     * error.
-     */
-    public void printInputError(){
-        outputLabel.setText("Error: invalid temperature data");
-    }
-    
-    /** Prints the result of the temperature conversion.
+    /** Prints a message to the UI.
      * 
-     * @param initialTempStr A String naming the measurement used for the
-     * initial temperature--either "Fahrenheit" or "Celsius."
-     * @param convertedTempStr A String naming the measurement used for the
-     * converted temperature--either "Fahrenheit" or "Celsius."
+     * @param msg The text that should be displayed.
      */
-    public void printConvertedTemperature(String initialTempStr, 
-            String convertedTempStr)
+    public void printMessage(String msg)
     {
-        /* Prepare the unconverted and converted temperatures for output by
-        converting them to Strings. */
-        DecimalFormat df = new DecimalFormat("#.##");
-        String initialTemp = df.format(initialTemperature);
-        String convertedTemp = df.format(convertedTemperature);
-        
-        // Print the temperature conversion result to the GUI.
-        outputLabel.setText(initialTemp + DEGREE_SYMBOL + " " + initialTempStr 
-                + " = " + convertedTemp + DEGREE_SYMBOL + " " 
-                + convertedTempStr);
+        outputLabel.setText(msg);
     }
 }
