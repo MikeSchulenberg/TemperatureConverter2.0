@@ -5,14 +5,13 @@
  */
 package my.temperatureconverter;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Mike Schulenberg
  */
 public class TemperatureConverterUI extends javax.swing.JFrame {
-    private final String FAHRENHEIT_TAG = "\u00B0 F";
-    private final String CELSIUS_TAG = "\u00B0 C";
-    
     /**
      * Creates new form TemperatureConverterUI
      */
@@ -31,15 +30,15 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        celsiusRadioButton = new javax.swing.JRadioButton();
+        fahrenheitRadioButton = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        temperatureLabel = new javax.swing.JLabel();
+        temperatureField = new javax.swing.JTextField();
+        scaleLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        outputLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Temperature Converter");
@@ -47,33 +46,43 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Celsius");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(celsiusRadioButton);
+        celsiusRadioButton.setSelected(true);
+        celsiusRadioButton.setText("Celsius");
+        celsiusRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                celsiusRadioButtonActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Fahrenheit");
+        buttonGroup1.add(fahrenheitRadioButton);
+        fahrenheitRadioButton.setText("Fahrenheit");
+        fahrenheitRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fahrenheitRadioButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Convert to:");
 
-        jLabel1.setText("Temperature:");
+        temperatureLabel.setText("Temperature:");
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(60, 20));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        temperatureField.setPreferredSize(new java.awt.Dimension(60, 20));
+        temperatureField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                temperatureFieldActionPerformed(evt);
             }
         });
 
-        jLabel2.setText(FAHRENHEIT_TAG);
+        scaleLabel.setText(DEGREE_SYMBOL + " F");
 
         jButton1.setText("OK");
         jButton1.setPreferredSize(new java.awt.Dimension(47, 23));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,18 +92,17 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2))
+                        .addComponent(celsiusRadioButton)
+                        .addComponent(fahrenheitRadioButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(temperatureLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(scaleLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -102,23 +110,24 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                    .addComponent(temperatureLabel)
+                    .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scaleLabel))
+                .addGap(21, 21, 21)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(celsiusRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addGap(18, 18, 18)
+                .addComponent(fahrenheitRadioButton)
+                .addGap(27, 27, 27)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel4.setText("jLabel4");
+        outputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        outputLabel.setText(" ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -126,14 +135,14 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(55, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(outputLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,8 +161,8 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -161,13 +170,23 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    private void celsiusRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celsiusRadioButtonActionPerformed
+        conversionMode = ConversionMode.FAHRENHEIT_TO_CELSIUS;
+        scaleLabel.setText(DEGREE_SYMBOL + " F");
+    }//GEN-LAST:event_celsiusRadioButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void temperatureFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureFieldActionPerformed
+        doConversion();
+    }//GEN-LAST:event_temperatureFieldActionPerformed
+
+    private void fahrenheitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fahrenheitRadioButtonActionPerformed
+        conversionMode = ConversionMode.CELSIUS_TO_FAHHRENHEIT;
+        scaleLabel.setText(DEGREE_SYMBOL + " C");
+    }//GEN-LAST:event_fahrenheitRadioButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         doConversion();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,15 +225,106 @@ public class TemperatureConverterUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton celsiusRadioButton;
+    private javax.swing.JRadioButton fahrenheitRadioButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel outputLabel;
+    private javax.swing.JLabel scaleLabel;
+    private javax.swing.JTextField temperatureField;
+    private javax.swing.JLabel temperatureLabel;
     // End of variables declaration//GEN-END:variables
+
+    // the temperature in degrees before conversion
+    double initialTemperature = 0;      
+    // the temperature in degrees after conversion
+    double convertedTemperature = 0;
+    
+    // tags consisting of degree symbol and temperature scale
+    private final String DEGREE_SYMBOL = "\u00B0 ";
+    
+    // used to switch between temperature conversion modes
+    private enum ConversionMode {FAHRENHEIT_TO_CELSIUS, CELSIUS_TO_FAHHRENHEIT};
+    // default conversion mode
+    private ConversionMode conversionMode 
+            = ConversionMode.FAHRENHEIT_TO_CELSIUS;
+    
+    private void doConversion(){
+        String temperature = temperatureField.getText();           
+            
+        switch(conversionMode)
+        {
+            case FAHRENHEIT_TO_CELSIUS :
+                convertToCelsius(temperature);
+                break;
+            case CELSIUS_TO_FAHHRENHEIT :
+                convertToFahrenheit(temperature);
+                break;               
+        }
+    }
+    
+    private void convertToCelsius(String temperatureStr){
+        /* Throw an exception if the user enters invalid temperature data.
+        Otherwise, relay the conversion and display commands. */
+        try
+        {
+            double temperature = Double.parseDouble(temperatureStr);
+            initialTemperature = temperature;
+            convertedTemperature = (temperature - 32.0) * (0.5556);
+            printConvertedTemperature("F", "Celsius");
+        }
+        
+        catch(Exception e)
+        {
+            printInputError();
+        }  
+    }
+    
+    private void convertToFahrenheit(String temperatureStr){
+        /* Throw an exception if the user enters invalid temperature data.
+        Otherwise, relay the conversion and display commands. */
+        try
+        {
+            double temperature = Double.parseDouble(temperatureStr);
+            initialTemperature = temperature;
+            convertedTemperature = (temperature * (1.8)) + 32.0;
+            printConvertedTemperature("C", "Fahrenheit");
+        }
+        
+        catch(Exception e)
+        {
+            printInputError();
+        }
+    }
+    
+    /** Prints an error message to the GUI to inform the user of an input
+     * error.
+     */
+    public void printInputError(){
+        outputLabel.setText("Error: invalid temperature data");
+    }
+    
+    /** Prints the result of the temperature conversion.
+     * 
+     * @param initialTempStr A String naming the measurement used for the
+     * initial temperature--either "Fahrenheit" or "Celsius."
+     * @param convertedTempStr A String naming the measurement used for the
+     * converted temperature--either "Fahrenheit" or "Celsius."
+     */
+    public void printConvertedTemperature(String initialTempStr, 
+            String convertedTempStr)
+    {
+        /* Prepare the unconverted and converted temperatures for output by
+        converting them to Strings. */
+        DecimalFormat df = new DecimalFormat("#.##");
+        String initialTemp = df.format(initialTemperature);
+        String convertedTemp = df.format(convertedTemperature);
+        
+        // Print the temperature conversion result to the GUI.
+        outputLabel.setText(initialTemp + DEGREE_SYMBOL + " " + initialTempStr 
+                + " = " + convertedTemp + DEGREE_SYMBOL + " " 
+                + convertedTempStr);
+    }
 }
