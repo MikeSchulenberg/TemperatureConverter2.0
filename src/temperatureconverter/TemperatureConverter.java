@@ -58,7 +58,7 @@ public class TemperatureConverter
     }
     
     /** Attempts to parse temperature data into a double. If successful, the
-     * temperature is stored for conversion.
+     * data is stored as the initial temperature for conversion.
      * 
      * @param temperatureStr A String containing the temperature data to parse.
      * @return true if the temperature data is valid; false otherwise
@@ -69,8 +69,7 @@ public class TemperatureConverter
         
         try
         {
-            double temperature = Double.parseDouble(temperatureStr);
-            initialTemperature = temperature;
+            initialTemperature = Double.parseDouble(temperatureStr);
         }
         
         catch(NumberFormatException e)
