@@ -32,49 +32,54 @@ public class TemperatureConverter
         this.UI = ui;
     }
     
-    //TODO: remove try/catch block and try to streamline code.
     /** Converts the temperature from Fahrenheit to Celsius
      * 
      * @param temperatureStr A String containing the temperature data to convert.
      */
     public void convertFahrenheitToCelsius(String temperatureStr)
     {
-        /* Throw an exception if the user enters invalid temperature data.
-        Otherwise, execute the conversion and prepare the result for display. */
-        try
+        if (parseTemperature(temperatureStr))
         {
-            double temperature = Double.parseDouble(temperatureStr);
-            initialTemperature = temperature;
-            convertedTemperature = (temperature - 32.0) * (0.5556);
+            convertedTemperature = (initialTemperature - 32.0) * (0.5556);
             printConvertedTemperature("F", "Celsius");
         }
-
-        catch(Exception e)
-        {
-            printInputError();
-        }  
     }
-    
-    //TODO: remove try/catch block and try to streamline code.
+
     /** Converts the temperature from Celsius to Fahrenheit.
      * 
      * @param temperatureStr A String containing the temperature data to convert.
      */
     public void convertCelsuisToFahrenheit(String temperatureStr){
-        /* Throw an exception if the user enters invalid temperature data.
-        Otherwise, execute the conversion and prepare the result for display. */
+        if (parseTemperature(temperatureStr))
+        {
+            convertedTemperature = (initialTemperature * (1.8)) + 32.0;
+            printConvertedTemperature("C", "Fahrenheit");
+        }
+    }
+    
+    /** Attempts to parse temperature data into a double. If successful, the
+     * temperature is stored for conversion.
+     * 
+     * @param temperatureStr A String containing the temperature data to parse.
+     * @return true if the temperature data is valid; false otherwise
+     */
+    private boolean parseTemperature(String temperatureStr)
+    {
+        boolean parseSuccessful = true;
+        
         try
         {
             double temperature = Double.parseDouble(temperatureStr);
             initialTemperature = temperature;
-            convertedTemperature = (temperature * (1.8)) + 32.0;
-            printConvertedTemperature("C", "Fahrenheit");
         }
         
-        catch(Exception e)
+        catch(NumberFormatException e)
         {
             printInputError();
+            parseSuccessful = false;
         }
+        
+        return parseSuccessful;
     }
     
     /** Sends an error message to the GUI informing the user of an input error.
