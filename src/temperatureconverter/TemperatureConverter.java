@@ -40,7 +40,7 @@ public class TemperatureConverter
     {
         if (parseTemperature(temperatureStr))
         {
-            convertedTemperature = (initialTemperature - 32.0) * (0.5556);
+            convertedTemperature = (initialTemperature - 32.0) * 0.555556;
             printConvertedTemperature("F", "Celsius");
         }
     }
@@ -52,8 +52,60 @@ public class TemperatureConverter
     public void convertCelsuisToFahrenheit(String temperatureStr){
         if (parseTemperature(temperatureStr))
         {
-            convertedTemperature = (initialTemperature * (1.8)) + 32.0;
+            convertedTemperature = (initialTemperature * 1.8) + 32.0;
             printConvertedTemperature("C", "Fahrenheit");
+        }
+    }
+    
+    /** Converts the temperature from Fahrenheit to Kelvin.
+     * 
+     * @param temperatureStr A String containing the temperature data to convert.
+     */
+    public void convertFahrenheitToKelvin(String temperatureStr)
+    {
+        if (parseTemperature(temperatureStr))
+        {
+            convertedTemperature = (initialTemperature + 459.67) * 0.555556;
+            printConvertedTemperature("F", "kelvins");
+        }
+    }
+    
+    /** Converts the temperature from Kelvin to Fahrenheit.
+     * 
+     * @param temperatureStr A String containing the temperature data to convert.
+     */
+    public void convertKelvinToFahrenheit(String temperatureStr)
+    {
+        if (parseTemperature(temperatureStr))
+        {
+            convertedTemperature = (initialTemperature * 1.8) - 459.67;
+            printConvertedTemperature("K", "Fahrenheit");
+        }
+    }
+    
+    /** Converts the temperature from Celsius to Kelvin.
+     * 
+     * @param temperatureStr A String containing the temperature data to convert.
+     */
+    public void convertCelsiusToKelvin(String temperatureStr)
+    {
+        if (parseTemperature(temperatureStr))
+        {
+            convertedTemperature = initialTemperature + 273.15;
+            printConvertedTemperature("C", "kelvins");
+        }
+    }
+    
+    /** Converts the temperature from Kelvin to Celsius.
+     * 
+     * @param temperatureStr A String containing the temperature data to convert.
+     */
+    public void convertKelvinToCelsius(String temperatureStr)
+    {
+        if (parseTemperature(temperatureStr))
+        {
+            convertedTemperature = initialTemperature - 273.15;
+            printConvertedTemperature("K", "Celsius");
         }
     }
     

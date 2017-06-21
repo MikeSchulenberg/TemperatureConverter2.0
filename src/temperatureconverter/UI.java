@@ -45,13 +45,14 @@ public class UI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         temperatureLabel = new javax.swing.JLabel();
         temperatureField = new javax.swing.JTextField();
-        scaleLabel = new javax.swing.JLabel();
         OKbutton = new javax.swing.JButton();
+        kelvinRadioButton = new javax.swing.JRadioButton();
+        convertFromComboBox = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         outputLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Temperature Converter");
+        setTitle("Temperature Converter 2.0");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -84,8 +85,6 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
-        scaleLabel.setText(DEGREE_SYMBOL + " F");
-
         OKbutton.setText("OK");
         OKbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,25 +92,47 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(kelvinRadioButton);
+        kelvinRadioButton.setText("Kelvin");
+        kelvinRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kelvinRadioButtonActionPerformed(evt);
+            }
+        });
+
+        convertFromComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fahrenheit", "Celsius", "Kelvin" }));
+        convertFromComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                convertFromComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(119, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(celsiusRadioButton)
+                    .addComponent(fahrenheitRadioButton))
+                .addGap(142, 142, 142))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(celsiusRadioButton)
-                        .addComponent(fahrenheitRadioButton))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(temperatureLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(OKbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scaleLabel)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(OKbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(convertFromComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(kelvinRadioButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,16 +142,18 @@ public class UI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(temperatureLabel)
                     .addComponent(temperatureField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scaleLabel))
+                    .addComponent(convertFromComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(celsiusRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fahrenheitRadioButton)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(kelvinRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(OKbutton)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -184,8 +207,7 @@ public class UI extends javax.swing.JFrame {
      * @param evt The event triggered by the radio button selection.
      */
     private void celsiusRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celsiusRadioButtonActionPerformed
-        conversionMode = ConversionMode.FAHRENHEIT_TO_CELSIUS;
-        scaleLabel.setText(DEGREE_SYMBOL + " F");
+        setScaleToConvertTo(TemperatureScale.CELSIUS);       
     }//GEN-LAST:event_celsiusRadioButtonActionPerformed
 
     /** Executes the temperature conversion when the text field for entering
@@ -202,8 +224,7 @@ public class UI extends javax.swing.JFrame {
      * @param evt The event triggered by the radio button selection.
      */
     private void fahrenheitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fahrenheitRadioButtonActionPerformed
-        conversionMode = ConversionMode.CELSIUS_TO_FAHHRENHEIT;
-        scaleLabel.setText(DEGREE_SYMBOL + " C");
+        setScaleToConvertTo(TemperatureScale.FAHRENHEIT); 
     }//GEN-LAST:event_fahrenheitRadioButtonActionPerformed
 
     /** Executes the temperature conversion when the "OK" button is pressed.
@@ -213,6 +234,27 @@ public class UI extends javax.swing.JFrame {
     private void OKbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKbuttonActionPerformed
          convertTemperature();
     }//GEN-LAST:event_OKbuttonActionPerformed
+
+    private void kelvinRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kelvinRadioButtonActionPerformed
+        setScaleToConvertTo(TemperatureScale.KELVIN);
+    }//GEN-LAST:event_kelvinRadioButtonActionPerformed
+
+    private void convertFromComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertFromComboBoxActionPerformed
+        int convertFromIndex = convertFromComboBox.getSelectedIndex();
+        
+        switch (convertFromIndex)
+        {
+            case 0 :
+                setScaleToConvertFrom(TemperatureScale.FAHRENHEIT);
+                break;
+            case 1 :
+                setScaleToConvertFrom(TemperatureScale.CELSIUS);
+                break;
+            case 2 :
+                setScaleToConvertFrom(TemperatureScale.KELVIN);
+                break;
+        }
+    }//GEN-LAST:event_convertFromComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,24 +296,157 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JButton OKbutton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton celsiusRadioButton;
+    private javax.swing.JComboBox<String> convertFromComboBox;
     private javax.swing.JRadioButton fahrenheitRadioButton;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton kelvinRadioButton;
     private javax.swing.JLabel outputLabel;
-    private javax.swing.JLabel scaleLabel;
     private javax.swing.JTextField temperatureField;
     private javax.swing.JLabel temperatureLabel;
     // End of variables declaration//GEN-END:variables
 
-    // the standard degree symbol; used for multiple text elements
-    private final String DEGREE_SYMBOL = "\u00B0 ";
+    // tracks the temperature scales to convert from and convert to
+    private enum TemperatureScale {FAHRENHEIT, CELSIUS, KELVIN};
+    // set default temperature scale to convert from
+    private TemperatureScale convertFrom = TemperatureScale.FAHRENHEIT;
+    // set default temperature scale to convert to
+    private TemperatureScale convertTo = TemperatureScale.CELSIUS;  
     
     // used to switch between temperature conversion modes
-    private enum ConversionMode {FAHRENHEIT_TO_CELSIUS, CELSIUS_TO_FAHHRENHEIT};
+    private enum ConversionMode {FAHRENHEIT_TO_CELSIUS, CELSIUS_TO_FAHRENHEIT,
+        FAHRENHEIT_TO_KELVIN, KELVIN_TO_FAHRENHEIT,
+        CELSIUS_TO_KELVIN, KELVIN_TO_CELSIUS};
     // set default conversion mode
     private ConversionMode conversionMode 
             = ConversionMode.FAHRENHEIT_TO_CELSIUS;
+    
+    /**
+     * 
+     * @param newScale 
+     */
+    private void setScaleToConvertFrom(TemperatureScale newScale)
+    {
+        convertFrom = newScale;
+
+        if (convertFrom == convertTo)
+        {  
+            switch (convertFrom)
+            {
+                case FAHRENHEIT :
+                    celsiusRadioButton.setSelected(true);
+                    setScaleToConvertTo(TemperatureScale.CELSIUS);
+                    break;
+                case CELSIUS :
+                    fahrenheitRadioButton.setSelected(true);
+                    setScaleToConvertTo(TemperatureScale.FAHRENHEIT);
+                    break;
+                case KELVIN :
+                    fahrenheitRadioButton.setSelected(true);
+                    setScaleToConvertTo(TemperatureScale.FAHRENHEIT);
+                    break;
+            }
+        }
+        
+        // update the conversion mode after changing a temperature scale
+        updateConversionMode();
+    }
+    
+    /**
+     * 
+     * @param newScale 
+     */
+    private void setScaleToConvertTo(TemperatureScale newScale)
+    {
+        convertTo = newScale;       
+
+        if (convertTo == convertFrom)
+        {
+          switch (convertTo)
+            {
+                case FAHRENHEIT :
+                    convertFromComboBox.setSelectedIndex(1);
+                    break;
+                case CELSIUS :
+                    convertFromComboBox.setSelectedIndex(0);
+                    break;
+                case KELVIN :
+                    convertFromComboBox.setSelectedIndex(0);
+                    break;
+            }
+        }
+        
+        // update the conversion mode after changing a temperature scale
+        updateConversionMode();
+    }
+    
+    /**
+     * 
+     */
+    private void updateConversionMode()
+    {
+        switch (convertFrom)
+        {
+            case FAHRENHEIT :
+                setFahrenheitToX();
+                break;
+            case CELSIUS :
+                setCelsiusToX();
+                break;
+            case KELVIN :
+                setKelvinToX();
+                break;
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void setFahrenheitToX()
+    {
+        if (convertTo == TemperatureScale.CELSIUS)
+        {
+            conversionMode = ConversionMode.FAHRENHEIT_TO_CELSIUS;
+        }
+        
+        else
+        {
+            conversionMode = ConversionMode.FAHRENHEIT_TO_KELVIN;
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void setCelsiusToX()
+    {
+        if (convertTo == TemperatureScale.FAHRENHEIT)
+        {
+            conversionMode = ConversionMode.CELSIUS_TO_FAHRENHEIT;
+        }
+        
+        else
+        {
+            conversionMode = ConversionMode.CELSIUS_TO_KELVIN;
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void setKelvinToX()
+    {
+        if (convertTo == TemperatureScale.FAHRENHEIT)
+        {
+            conversionMode = ConversionMode.KELVIN_TO_FAHRENHEIT;
+        }
+        
+        else
+        {
+            conversionMode = ConversionMode.KELVIN_TO_CELSIUS;
+        }
+    }
     
     /** Determines which temperature conversion mode to execute and calls
      * the appropriate method in the `TemperatureConverter` class.
@@ -286,9 +461,23 @@ public class UI extends javax.swing.JFrame {
             case FAHRENHEIT_TO_CELSIUS :
                 CONVERTER.convertFahrenheitToCelsius(temperature);
                 break;
-            case CELSIUS_TO_FAHHRENHEIT :
+            case CELSIUS_TO_FAHRENHEIT :
                 CONVERTER.convertCelsuisToFahrenheit(temperature);
-                break;               
+                break; 
+            case FAHRENHEIT_TO_KELVIN :
+                CONVERTER.convertFahrenheitToKelvin(temperature);
+                break;
+            case KELVIN_TO_FAHRENHEIT :
+                CONVERTER.convertKelvinToFahrenheit(temperature);
+                break;
+            case CELSIUS_TO_KELVIN :
+                CONVERTER.convertCelsiusToKelvin(temperature);
+                break;
+            case KELVIN_TO_CELSIUS :
+                CONVERTER.convertKelvinToCelsius(temperature);        
+                break;
+            default :
+                System.out.println("Error: invalid conversion mode");
         }
     }
     
