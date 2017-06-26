@@ -1,30 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/** This class implements converts temperature from one scale to another.
+ *
+ * filename: TemperatureConverter.java
+ * @author Mike Schulenberg - mike.schulenberg@gmail.com
+ * @version 2.0
+ * copyright 2017 Mike Schulenberg
  */
 
 package temperatureconverter;
 
 import java.text.DecimalFormat;
 
-/** This class implements the conversion functionality for a program that
- * converts temperature from one scale to another.
- *
- * filename: TemperatureConverter.java
- * @author Mike Schulenberg
- * @version 2.0
- * @since 
- */
 public class TemperatureConverter 
 {
     private final UI UI;
     
-    // the standard degree symbol; used for multiple text elements
+    // the temperature in degrees before conversion
     double initialTemperature = 0;      
     // the temperature in degrees after conversion
     double convertedTemperature = 0;
-    // tag consisting of degree symbol
+    // the standard degree symbol; used for text elements in the GUI
     private final String DEGREE_SYMBOL = "\u00B0 ";
     
     public TemperatureConverter(UI ui) 
@@ -143,10 +137,10 @@ public class TemperatureConverter
     
     /** Formats and sens the result of the temperature conversion to the GUI.
      * 
-     * @param initialTempStr A String naming the measurement used for the
-     * initial temperature--either "Fahrenheit" or "Celsius."
-     * @param convertedTempStr A String naming the measurement used for the
-     * converted temperature--either "Fahrenheit" or "Celsius."
+     * @param initialTempStr A String representing the temperature scale used 
+     * for the initial temperature.
+     * @param convertedTempStr A String representing the temperature scale used
+     * for the converted temperature.
      */
     public void printConvertedTemperature(String initialTempStr, 
             String convertedTempStr)

@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-// TODO: update license headers in all files
-// TODO: update @since attribute in all files
-// TODO: implement conversions involving Kelvin
-
-package temperatureconverter;
-
-/** This class implements a GUI for a program that converts temperature from
- * one scale to another.
+/** This class implements a GUI for a temperature conversion program.
  *
  * filename: UI.java
  * @author Mike Schulenberg - mike.schulenberg@gmail.com
  * @version 2.0
- * @since 
+ * copyright 2017 Mike Schulenberg
  */
+
+package temperatureconverter;
+
 public class UI extends javax.swing.JFrame {
     private final TemperatureConverter CONVERTER;
     
@@ -202,7 +192,7 @@ public class UI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    /** Sets the temperature conversion mode to "Fahrenheit to Celsius."
+    /** Sets Celsius as the temperature scale being converted to.
      * 
      * @param evt The event triggered by the radio button selection.
      */
@@ -210,8 +200,8 @@ public class UI extends javax.swing.JFrame {
         setScaleToConvertTo(TemperatureScale.CELSIUS);       
     }//GEN-LAST:event_celsiusRadioButtonActionPerformed
 
-    /** Executes the temperature conversion when the text field for entering
-     * temperature data is used.
+    /** Allows the user to enter a temperature to be converted. It executes the
+     * conversion when used.
      * 
      * @param evt The event triggered when "Enter" is pressed on the text field.
      */
@@ -219,7 +209,7 @@ public class UI extends javax.swing.JFrame {
         convertTemperature();
     }//GEN-LAST:event_temperatureFieldActionPerformed
 
-    /** Sets the temperature conversion mode to "Celsius to Fahrenheit."
+    /** Sets Fahrenheit as the temperature scale being converted to.
      * 
      * @param evt The event triggered by the radio button selection.
      */
@@ -235,10 +225,18 @@ public class UI extends javax.swing.JFrame {
          convertTemperature();
     }//GEN-LAST:event_OKbuttonActionPerformed
 
+    /** Sets Kelvin as the temperature scale being converted to.
+     * 
+     * @param evt The event triggered by the radio button selection.
+     */
     private void kelvinRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kelvinRadioButtonActionPerformed
         setScaleToConvertTo(TemperatureScale.KELVIN);
     }//GEN-LAST:event_kelvinRadioButtonActionPerformed
 
+    /** Sets the temperature scale being converted from.
+     * 
+     * @param evt The event triggered by the ComboBox action.
+     */
     private void convertFromComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertFromComboBoxActionPerformed
         int convertFromIndex = convertFromComboBox.getSelectedIndex();
         
@@ -307,7 +305,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel temperatureLabel;
     // End of variables declaration//GEN-END:variables
 
-    // tracks the temperature scales to convert from and convert to
+    // represents the temperature scales supported for conversion
     private enum TemperatureScale {FAHRENHEIT, CELSIUS, KELVIN};
     // set default temperature scale to convert from
     private TemperatureScale convertFrom = TemperatureScale.FAHRENHEIT;
@@ -322,9 +320,9 @@ public class UI extends javax.swing.JFrame {
     private ConversionMode conversionMode 
             = ConversionMode.FAHRENHEIT_TO_CELSIUS;
     
-    /**
+    /** Sets the temperature scale being converted from.
      * 
-     * @param newScale 
+     * @param newScale The temperature scale to convert from.
      */
     private void setScaleToConvertFrom(TemperatureScale newScale)
     {
@@ -332,6 +330,8 @@ public class UI extends javax.swing.JFrame {
 
         if (convertFrom == convertTo)
         {  
+            /* The temperature scale being converted from is the same as the
+            scale being converted to. Change the scale being converted to. */
             switch (convertFrom)
             {
                 case FAHRENHEIT :
@@ -353,9 +353,9 @@ public class UI extends javax.swing.JFrame {
         updateConversionMode();
     }
     
-    /**
+    /** Sets the temperature scale being converted to.
      * 
-     * @param newScale 
+     * @param newScale The temperature scale to convert to.
      */
     private void setScaleToConvertTo(TemperatureScale newScale)
     {
@@ -363,15 +363,20 @@ public class UI extends javax.swing.JFrame {
 
         if (convertTo == convertFrom)
         {
-          switch (convertTo)
+            /* The temperature scale being converted to is the same as the scale
+            being converted from. Change the scale being converted from. */
+            switch (convertTo)
             {
                 case FAHRENHEIT :
+                    // set scale to convert from = Celsius
                     convertFromComboBox.setSelectedIndex(1);
                     break;
                 case CELSIUS :
+                    // set scale to convert from = Fahrenheit
                     convertFromComboBox.setSelectedIndex(0);
                     break;
                 case KELVIN :
+                    // set scale to convert from = Fahrenheit
                     convertFromComboBox.setSelectedIndex(0);
                     break;
             }
@@ -381,7 +386,9 @@ public class UI extends javax.swing.JFrame {
         updateConversionMode();
     }
     
-    /**
+    /** Updates the temperature conversion mode. Should be used after the 
+     * user changes a temperature scale, whether it's the scale being converted
+     * to or the scale being converted from.
      * 
      */
     private void updateConversionMode()
@@ -400,7 +407,9 @@ public class UI extends javax.swing.JFrame {
         }
     }
     
-    /**
+    /** Sets the temperature conversion mode based on Fahrenheit being
+     * the temperature scale to convert from. Checks which of the remaining
+     * scales is being converted to before changing the conversion mode.
      * 
      */
     private void setFahrenheitToX()
@@ -416,7 +425,9 @@ public class UI extends javax.swing.JFrame {
         }
     }
     
-    /**
+    /** Sets the temperature conversion mode based on Celsius being
+     * the temperature scale to convert from. Checks which of the remaining
+     * scales is being converted to before changing the conversion mode.
      * 
      */
     private void setCelsiusToX()
@@ -432,7 +443,9 @@ public class UI extends javax.swing.JFrame {
         }
     }
     
-    /**
+    /** Sets the temperature conversion mode based on Kelvin being
+     * the temperature scale to convert from. Checks which of the remaining
+     * scales is being converted to before changing the conversion mode.
      * 
      */
     private void setKelvinToX()
