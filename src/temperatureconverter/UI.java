@@ -346,6 +346,8 @@ public class UI extends javax.swing.JFrame {
                     fahrenheitRadioButton.setSelected(true);
                     setScaleToConvertTo(TemperatureScale.FAHRENHEIT);
                     break;
+                default :
+                    System.out.println("Error: invalid temperature scale");
             }
         }
         
@@ -379,6 +381,8 @@ public class UI extends javax.swing.JFrame {
                     // set scale to convert from = Fahrenheit
                     convertFromComboBox.setSelectedIndex(0);
                     break;
+                default :
+                    System.out.println("Error: invalid temperature scale");
             }
         }
         
@@ -404,6 +408,8 @@ public class UI extends javax.swing.JFrame {
             case KELVIN :
                 setKelvinToX();
                 break;
+            default :
+                System.out.println("Error: invalid temperature scale");
         }
     }
     

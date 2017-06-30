@@ -1,4 +1,4 @@
-/** This class implements converts temperature from one scale to another.
+/** This class converts temperature from one scale to another.
  *
  * filename: TemperatureConverter.java
  * @author Mike Schulenberg - mike.schulenberg@gmail.com
@@ -7,8 +7,6 @@
  */
 
 package temperatureconverter;
-
-import java.text.DecimalFormat;
 
 public class TemperatureConverter 
 {
@@ -35,7 +33,9 @@ public class TemperatureConverter
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = (initialTemperature - 32.0) * 0.555556;
-            printConvertedTemperature("F", "Celsius");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            printConvertedTemperature(DEGREE_SYMBOL + " F", 
+                    DEGREE_SYMBOL + " Celsius");
         }
     }
 
@@ -43,11 +43,14 @@ public class TemperatureConverter
      * 
      * @param temperatureStr A String containing the temperature data to convert.
      */
-    public void convertCelsuisToFahrenheit(String temperatureStr){
+    public void convertCelsuisToFahrenheit(String temperatureStr)
+    {
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = (initialTemperature * 1.8) + 32.0;
-            printConvertedTemperature("C", "Fahrenheit");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            printConvertedTemperature(DEGREE_SYMBOL + " C", 
+                    DEGREE_SYMBOL + " Fahrenheit");
         }
     }
     
@@ -60,7 +63,9 @@ public class TemperatureConverter
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = (initialTemperature + 459.67) * 0.555556;
-            printConvertedTemperature("F", "kelvins");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            String kelvinLabel = chooseKelvinLabel();
+            printConvertedTemperature(DEGREE_SYMBOL + " F", kelvinLabel);
         }
     }
     
@@ -73,7 +78,8 @@ public class TemperatureConverter
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = (initialTemperature * 1.8) - 459.67;
-            printConvertedTemperature("K", "Fahrenheit");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            printConvertedTemperature(" K", DEGREE_SYMBOL + " Fahrenheit");
         }
     }
     
@@ -86,7 +92,9 @@ public class TemperatureConverter
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = initialTemperature + 273.15;
-            printConvertedTemperature("C", "kelvins");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            String kelvinLabel = chooseKelvinLabel();
+            printConvertedTemperature(DEGREE_SYMBOL + " C", kelvinLabel);
         }
     }
     
@@ -99,7 +107,8 @@ public class TemperatureConverter
         if (parseTemperature(temperatureStr))
         {
             convertedTemperature = initialTemperature - 273.15;
-            printConvertedTemperature("K", "Celsius");
+            convertedTemperature = roundDecimal(convertedTemperature);
+            printConvertedTemperature(" K", DEGREE_SYMBOL + " Celsius");
         }
     }
     
@@ -127,6 +136,16 @@ public class TemperatureConverter
         return parseSuccessful;
     }
     
+    /** Rounds a number to 2 decimal places.
+     * 
+     * @param value A number to be rounded.
+     * @return A number rounded to 2 decimal places.
+     */
+    private double roundDecimal(double value)
+    {
+        return Math.round(value * 100.0) / 100.0;
+    }
+    
     /** Sends an error message to the GUI informing the user of an input error.
      * 
      */
@@ -135,7 +154,26 @@ public class TemperatureConverter
         UI.printMessage(msg);
     }
     
-    /** Formats and sens the result of the temperature conversion to the GUI.
+    /** Checks the value of the converted temperature and determines if a string
+     * representing the singular or plural form of "kelvin" should be used.
+     * 
+     * @return Either " kelvin" or " kelvins".
+     */
+    private String chooseKelvinLabel()
+    { 
+        if ((convertedTemperature > 0 && convertedTemperature <= 1)
+                || (convertedTemperature < 0 && convertedTemperature >= -1))
+        {
+            return " kelvin";
+        }
+
+        else
+        {
+            return " kelvins";
+        }
+    }
+    
+    /** Formats and sends the result of the temperature conversion to the GUI.
      * 
      * @param initialTempStr A String representing the temperature scale used 
      * for the initial temperature.
@@ -145,16 +183,13 @@ public class TemperatureConverter
     public void printConvertedTemperature(String initialTempStr, 
             String convertedTempStr)
     {
-        /* Prepare the unconverted and converted temperatures for output by
-        converting them to Strings. */
-        DecimalFormat df = new DecimalFormat("#.##");
-        String initialTemp = df.format(initialTemperature);
-        String convertedTemp = df.format(convertedTemperature);
+        /* Round the initial temperature before printing. 
+        The converted temperature should already have been rounded as part of 
+        the conversion process. */
+        initialTemperature = roundDecimal(initialTemperature);
         
-        // Format the temperature conversion result and send to the GUI.
-        String msg = initialTemp + DEGREE_SYMBOL + " " + initialTempStr 
-                + " = " + convertedTemp + DEGREE_SYMBOL + " " 
-                + convertedTempStr;       
+        String msg = initialTemperature + initialTempStr + " = " 
+                + convertedTemperature + convertedTempStr; 
         UI.printMessage(msg);
     }
 }
