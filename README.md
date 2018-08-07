@@ -29,3 +29,5 @@ The program interface has 3 parts:
 - a panel to display the conversion result
 	
 To convert a temperature, enter a value in the 'Temperature' field and use the drop-down list to select the current temperature scale. Use the 'Convert to' radio buttons to select the target temperature scale, then click the 'OK' button to see the result.
+
+![alt text](https://github.com/MikeSchulenberg/TemperatureConverter2.0/blob/master/TemperatureConverter2.0-img.JPG)
