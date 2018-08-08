@@ -20,7 +20,7 @@ This program was written in Java using NetBeans, its included GUI builder, and S
 - TemperatureConverter2.0.jar
 
 #### Installation
-Unzip the contents of TemperatureConverter2.0.zip into their own directory. Installation of the JRE (Java Runtime Environment) is also required on the target machine.
+Unzip the contents of TemperatureConverter2.0.zip into their own directory. Installation of the JRE (Java Runtime Environment) is also required.
 
 ## Using the Program
 The program interface has 3 parts: 
