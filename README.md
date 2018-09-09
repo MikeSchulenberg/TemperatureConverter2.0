@@ -12,7 +12,7 @@ This version features an improved user interface over Temperature Converter 1.0,
 ## Development
 This program was written in Java using NetBeans, its included GUI builder, and Swing.
 
-## Download an Executable Java File
+## Download an Executable for Java
 [Temperature Converter 2.0](https://www.dropbox.com/s/f17birmb3ehenkv/TemperatureConverter2.0.zip?dl=1)
 
 #### ZIP File Contents
